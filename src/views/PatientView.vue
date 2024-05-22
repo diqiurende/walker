@@ -15,7 +15,7 @@ function  toInquiry(){
       <el-header style="position: fixed;top: 0;width: 100vw;z-index: 20;background: white">
         <el-row style="height: 8vh;background: white">
           <el-col :span="6">
-            <main-logo></main-logo>
+            <main-logo :size="130"></main-logo>
           </el-col>
           <el-col :span="5">&nbsp;
           </el-col>
@@ -86,7 +86,7 @@ function  toInquiry(){
               <br />
 
             </p>
-            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 28vh;display: flex;justify-content: center"></el-image>
+            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 20vh;display: flex;justify-content: center"></el-image>
           </el-col>
 
         </el-row>
@@ -100,7 +100,7 @@ function  toInquiry(){
             <div style="height: 60vh;width: 100vw;left: 0">
               &nbsp;
               <p class="flagFont" style="color:white; position: absolute; left: 5vw; height: 5vh; font-size: 2.5vw; display: flex; align-items: center;">
-                <el-icon size="50" style="color:#eac922;">
+                <el-icon size="130" style="color:#eac922;">
                   <Help/>
                 </el-icon>
                 行人重识别
