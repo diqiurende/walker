@@ -51,7 +51,7 @@ function  toInquiry(){
                     height: 30vh;
 "
                 >
-                  <p class="aliTitle">CMIC研究认为，智能安防已进入行业大发展时期&nbsp;</p>
+                  <p class="aliTitle">智能安防已进入行业大发展时期&nbsp;</p>
                   <p class="aliDescription" style="height: 10vh">近年来，中国智能安防行业相关国家政策频出，主要政策内容围绕鼓励安防行业与互联网、5G领域技术结合，推广智能安防应用等。</p>
                 </div>
               </el-carousel-item>
@@ -86,12 +86,13 @@ function  toInquiry(){
           <el-col>
             <div style="height: 60vh;width: 100vw;left: 0">
               &nbsp;
-              <p class="flagFont" style="color:white;position: absolute;left: 5vw;height: 5vh;font-size: 2.5vw" >
+              <p class="flagFont" style="color:white; position: absolute; left: 5vw; height: 5vh; font-size: 2.5vw; display: flex; align-items: center;">
                 <el-icon size="50" style="color:#eac922;">
                   <Help/>
                 </el-icon>
                 行人重识别
               </p>
+
             </div>
           </el-col>
         </el-row>
@@ -137,7 +138,9 @@ function  toInquiry(){
   background: whitesmoke;
   padding-left: 2.6vw;
   padding-right: 2.6vw;
-  font-size: 1.7vh;
+  display: flex;
+  justify-content: center;
+  font-size: 2vh;
 
   font-weight: bolder;
 }
@@ -170,4 +173,9 @@ function  toInquiry(){
   overflow: hidden;
 }
 
+.underclass {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 </style>
