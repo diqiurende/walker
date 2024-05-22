@@ -4,7 +4,7 @@ import MainLogo from "@/components/icons/MainLogo.vue";
 const router= useRouter()
 function  toInquiry(){
   router.push({
-    path:'/inquiry'
+    path:'/identify'
   })
 }
 </script>
