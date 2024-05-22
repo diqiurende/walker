@@ -20,16 +20,16 @@ function  toInquiry(){
           <el-col :span="5">&nbsp;
           </el-col>
           <el-col :span="2">
-            <p class="menuFont2" @click="toInquiry">问诊</p>
+            <p class="menuFont2" @click="toInquiry">识别</p>
+          </el-col>
+          <el-col :span="2">
+            <p class="menuFont2"> 系统设置</p>
+          </el-col>
+          <el-col :span="2">
+            <p class="menuFont2"> 历史记录</p>
           </el-col>
           <el-col :span="2">
             <p class="menuFont2"> 关于我们</p>
-          </el-col>
-          <el-col :span="2">
-            <p class="menuFont2"> ESG</p>
-          </el-col>
-          <el-col :span="2">
-            <p class="menuFont2"> 投资者关系</p>
           </el-col>
           <el-col :span="2">
             <p class="menuFont2"> 联系我们</p>
@@ -44,15 +44,15 @@ function  toInquiry(){
           <el-col :span="8" >
             <el-carousel  arrow="never" height="50vh">
               <el-carousel-item  style="background: whitesmoke;border-radius: 15px" >
-                <el-image src="/doctor.png" style="border-radius: 15px"></el-image>
+                <el-image src="src/assets/doctor.png" style="border-radius: 15px"></el-image>
                 <div
                     style="background: whitesmoke;
                     width: 100%;
                     height: 30vh;
 "
                 >
-                  <p class="aliTitle">云大健康ESG评级上升至A级，项目发展健康度获认可&nbsp;</p>
-                  <p class="aliDescription" style="height: 10vh">近日，国际知名指数供应商明晟公司（英文简称：MSCI）将雲大健康ESG（环境、社会、公司治理）评级从BBB上调至A</p>
+                  <p class="aliTitle">CMIC研究认为，智能安防已进入行业大发展时期&nbsp;</p>
+                  <p class="aliDescription" style="height: 10vh">近年来，中国智能安防行业相关国家政策频出，主要政策内容围绕鼓励安防行业与互联网、5G领域技术结合，推广智能安防应用等。</p>
                 </div>
               </el-carousel-item>
             </el-carousel>
@@ -62,16 +62,16 @@ function  toInquiry(){
           </el-col>
           <el-col :span="10">
             <p class="aliTitle" style="background: transparent">
-              《智慧健康养老产业发展行动计划（2021-2025年）》
+              中共中央办公厅、国务院办公厅印发《关于加强社会治安防控体系建设的意见》
             </p>
             <p class="aliDescription" >
-              以习近平新时代中国特色社会主义思想为指导，全面贯彻党的十九大和十九届二中、三中、四中、五中全会精神，立足新发展阶段、贯彻新发展理念、构建新发展格局，深入实施健康中国战略和积极应对人口老龄化国家战略，坚持以人民为中心，坚持供给侧结构性改革和需求侧管理相结合，强化科技支撑，优化产业生态，协同推进技术融合、产业融合、数据融合、标准融合，推动产业数字化发展，打造智慧健康养老新产品、新业态、新模式，为满足人民群众日益增长的健康及养老需求提供有力支撑<br />
+              加强信息资源互通共享和深度应用。按照科技引领、信息支撑的思路，加快构建纵向贯通、横向集成、共享共用、安全可靠的平安建设信息化综合平台。在确保信息安全、保护公民合法权益前提下，提高系统互联、信息互通和资源共享程度。强化信息资源深度整合应用，充分运用现代信息技术，增强主动预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设总体规划，充分运用新一代互联网、物联网、大数据、云计算和智能传感、遥感、卫星定位、地理信息系统等技术，创新社会治安防控手段，提升公共安全管理数字化、网络化、智能化水平，打造一批有机融合的示范工程。建立健全相关的信息安全保障体系，实现对基础设施、信息和应用等资源的立体化、自动化安全监测，对终端用户和应用系统的全方位、智能化安全防护。
+              <br />
               <p style="text-align: right">
               <br /><br />
-              工业和信息化部<br />
-              民政部<br />
-              国家卫生健康委<br />
-              2021年10月20日<br />
+                中共中央办公厅<br />
+                国务院办公厅<br />
+                2015-04-13<br />
               </p>
             </p>
           </el-col>
@@ -82,7 +82,7 @@ function  toInquiry(){
           </el-col>
         </el-row>
 
-        <el-row style="background: #55c048;">
+        <el-row style="background: #228def;">
           <el-col>
             <div style="height: 60vh;width: 100vw;left: 0">
               &nbsp;
@@ -90,8 +90,7 @@ function  toInquiry(){
                 <el-icon size="50" style="color:#eac922;">
                   <Help/>
                 </el-icon>
-
-                云大健康
+                行人重识别
               </p>
             </div>
           </el-col>
@@ -138,8 +137,8 @@ function  toInquiry(){
   background: whitesmoke;
   padding-left: 2.6vw;
   padding-right: 2.6vw;
-  font-size: 3vh;
-  font-family: YouYuan;
+  font-size: 1.7vh;
+
   font-weight: bolder;
 }
 .aliDescription{

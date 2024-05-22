@@ -21,7 +21,7 @@ defineProps({
     <el-icon :size="size" style="color:#eac922;">
       <Help/>
     </el-icon>
-    云大健康
+    行人重识别
   </p>
 </template>
 
@@ -29,7 +29,7 @@ defineProps({
 .flagFont{
   font-weight: bolder;
   font-size: 1.6vw;
-  color: #55c048;
+  color: #228def;
   display: flex;
   align-items: center;
   justify-content: center;
