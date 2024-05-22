@@ -42,16 +42,16 @@ function  toInquiry(){
         <el-row >
 
           <el-col :span="10" >
-            <el-carousel  arrow="never" height="65vh">
+            <el-carousel  arrow="never" height="60vh">
               <el-carousel-item  style="background: whitesmoke;border-radius: 15px" >
-                <el-image src="src/assets/doctor.png" style="border-radius: 15px"></el-image>
+                <el-image src="src/assets/walkerjpg.jpg" style="border-radius: 15px"></el-image>
                 <div
                     style="background: whitesmoke;
                     width: 100%;
                     height: 30vh;
 "
                 >
-                  <p class="aliTitle">智能安防已进入行业大发展时期&nbsp;</p>
+                  <p class="aliTitle1">智能安防已进入行业大发展时期&nbsp;</p>
                   <p class="aliDescription" style="height: 10vh">近年来，中国智能安防行业相关国家政策频出，主要政策内容围绕鼓励安防行业与互联网、5G领域技术结合，推广智能安防应用等。</p>
                 </div>
               </el-carousel-item>
@@ -59,7 +59,7 @@ function  toInquiry(){
           </el-col>
 
           <el-col :span="1" style="display: flex;justify-content: center;align-items: center">
-            <el-divider direction="vertical" style="height: 65vh;" />
+            <el-divider direction="vertical" style="height: 100%;" />
           </el-col>
 
           <el-col :span="6">
@@ -71,25 +71,24 @@ function  toInquiry(){
               <br />
 
             </p>
+            <el-image src="src/assets/camera.png" style="border-radius: 15px;margin-top: 12vh"></el-image>
           </el-col>
           <el-col :span="1" style="display: flex;justify-content: center;align-items: center">
-            <el-divider direction="vertical" style="height: 65vh;" />
+            <el-divider direction="vertical" style="height: 100%;" />
           </el-col>
+
           <el-col :span="6">
             <p class="aliTitle" style="background: transparent">
               中共中央办公厅、国务院办公厅印发《关于加强社会治安防控体系建设的意见》
             </p>
             <p class="aliDescription" >
-              加强信息资源互通共享和深度应用。按照科技引领、信息支撑的思路，加快构建纵向贯通、横向集成、共享共用、安全可靠的平安建设信息化综合平台。在确保信息安全、保护公民合法权益前提下，提高系统互联、信息互通和资源共享程度。强化信息资源深度整合应用，充分运用现代信息技术，增强主动预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设总体规划，充分运用新一代互联网、物联网、大数据、云计算和智能传感、遥感、卫星定位、地理信息系统等技术，创新社会治安防控手段，提升公共安全管理数字化、网络化、智能化水平，打造一批有机融合的示范工程。建立健全相关的信息安全保障体系，实现对基础设施、信息和应用等资源的立体化、自动化安全监测，对终端用户和应用系统的全方位、智能化安全防护。
+              加强信息资源共享和深度应用，构建纵向贯通、横向集成的平安建设信息化综合平台。提高系统互联、信息互通和资源共享程度，强化信息资源整合，增强预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设，运用新一代技术提升公共安全管理水平，建立健全信息安全保障体系。
               <br />
-              <p style="text-align: right">
-                <br /><br />
-                中共中央办公厅<br />
-                国务院办公厅<br />
-                2015-04-13<br />
-              </p>
+
             </p>
+            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 28vh;display: flex;justify-content: center"></el-image>
           </el-col>
+
         </el-row>
         <el-row>
           <el-col>
@@ -154,7 +153,19 @@ function  toInquiry(){
   padding-right: 2.6vw;
   display: flex;
   justify-content: center;
-  font-size: 1.6vw;
+  font-size: 1vw;
+
+
+  font-weight: bolder;
+}
+.aliTitle1{
+  background: whitesmoke;
+  padding-left: 2.6vw;
+  padding-right: 2.6vw;
+  display: flex;
+  justify-content: center;
+  font-size: 2vw;
+
 
   font-weight: bolder;
 }
