@@ -40,9 +40,9 @@ function  toInquiry(){
       <div style="height: 85vh;width: 99vw">&nbsp;</div>
       <el-main style="background: white;border-radius: 18px;width: 99vw; overflow-y:hidden; overflow-x:hidden">
         <el-row >
-          <el-col :span="1">&nbsp;</el-col>
-          <el-col :span="8" >
-            <el-carousel  arrow="never" height="50vh">
+
+          <el-col :span="10" >
+            <el-carousel  arrow="never" height="65vh">
               <el-carousel-item  style="background: whitesmoke;border-radius: 15px" >
                 <el-image src="src/assets/doctor.png" style="border-radius: 15px"></el-image>
                 <div
@@ -57,10 +57,25 @@ function  toInquiry(){
               </el-carousel-item>
             </el-carousel>
           </el-col>
-          <el-col :offset="2" :span="2">
-            <el-divider direction="vertical" style="height: 50vh" />
+
+          <el-col :span="1" style="display: flex;justify-content: center;align-items: center">
+            <el-divider direction="vertical" style="height: 65vh;" />
           </el-col>
-          <el-col :span="10">
+
+          <el-col :span="6">
+            <p class="aliTitle" style="background: transparent">
+              中共中央办公厅、国务院办公厅印发《关于加强社会治安防控体系建设的意见》
+            </p>
+            <p class="aliDescription" >
+              加强信息资源共享和深度应用，构建纵向贯通、横向集成的平安建设信息化综合平台。提高系统互联、信息互通和资源共享程度，强化信息资源整合，增强预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设，运用新一代技术提升公共安全管理水平，建立健全信息安全保障体系。
+              <br />
+
+            </p>
+          </el-col>
+          <el-col :span="1" style="display: flex;justify-content: center;align-items: center">
+            <el-divider direction="vertical" style="height: 65vh;" />
+          </el-col>
+          <el-col :span="6">
             <p class="aliTitle" style="background: transparent">
               中共中央办公厅、国务院办公厅印发《关于加强社会治安防控体系建设的意见》
             </p>
@@ -68,7 +83,7 @@ function  toInquiry(){
               加强信息资源互通共享和深度应用。按照科技引领、信息支撑的思路，加快构建纵向贯通、横向集成、共享共用、安全可靠的平安建设信息化综合平台。在确保信息安全、保护公民合法权益前提下，提高系统互联、信息互通和资源共享程度。强化信息资源深度整合应用，充分运用现代信息技术，增强主动预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设总体规划，充分运用新一代互联网、物联网、大数据、云计算和智能传感、遥感、卫星定位、地理信息系统等技术，创新社会治安防控手段，提升公共安全管理数字化、网络化、智能化水平，打造一批有机融合的示范工程。建立健全相关的信息安全保障体系，实现对基础设施、信息和应用等资源的立体化、自动化安全监测，对终端用户和应用系统的全方位、智能化安全防护。
               <br />
               <p style="text-align: right">
-              <br /><br />
+                <br /><br />
                 中共中央办公厅<br />
                 国务院办公厅<br />
                 2015-04-13<br />
@@ -81,7 +96,6 @@ function  toInquiry(){
             <div style="height: 10vh;width: 100vw;">&nbsp;</div>
           </el-col>
         </el-row>
-
         <el-row style="background: #228def;">
           <el-col>
             <div style="height: 60vh;width: 100vw;left: 0">
@@ -140,7 +154,7 @@ function  toInquiry(){
   padding-right: 2.6vw;
   display: flex;
   justify-content: center;
-  font-size: 2vh;
+  font-size: 1.6vw;
 
   font-weight: bolder;
 }
