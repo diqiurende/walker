@@ -1,10 +1,11 @@
 <script setup>
 
-import MainLogoWhite from "@/components/icons/MainLogoWhite.vue";
+
 import { ref, onMounted } from 'vue';
-import axios from 'axios';
-import { ElMessage } from 'element-plus'; // 引入Element Plus的消息提示
-import DoctorBackgrond from '@/assets/DoctorBackgrond.jpg'
+
+import { ElMessage } from 'element-plus';
+import MainLogo from "@/components/icons/MainLogo.vue"; // 引入Element Plus的消息提示
+
 
 
 const fileList = ref([]); // 用于存储文件列表
@@ -33,10 +34,6 @@ const handleChange = (uploadFile, fileList) => {
   }
 };
 
-// 处理上传成功的逻辑
-// const handleUploadSuccess = (url) => {
-//   uploadedImageUrl.value = url;
-// };
 
 // 文件超出限制时的处理
 const handleExceed = (files, fileList) => {
@@ -69,66 +66,72 @@ function onSuccess(res){
     <el-container>
       <el-header >
         <el-row>
-          <el-col :span="6">
-            <main-logo-white size="50"></main-logo-white>
+          <el-col :span="3">
+            <main-logo size="30"></main-logo>
           </el-col>
         </el-row>
       </el-header>
-<!--      <el-main style="background-color: #f8f8f8">-->
-<!--        <el-row>-->
-<!--            <p class="title2">健康医典</p>-->
-<!--            <p class="description2">&nbsp;&nbsp;|&nbsp;&nbsp;权威专家    权威机构    三审三校</p>-->
-<!--        </el-row>-->
-<!--      </el-main>-->
       <el-main>
         <el-row>
-          <el-col :span="24">
-            <p style="
-            font-size: 4vw;
-            height: 10vh;
-            width: 97vw;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            color: #55c048;;
-            font-weight: bolder;
-            letter-spacing: 1vw;
+          <el-col :span="11">
+            <el-container
+                style="
+                width:100%;
+                height: 16vh;
+                margin: 2vh 0.6vw 2vh 0.6vw;
+                padding: 2vh 0.6vw 2vh 0.6vw;
+                background-color: rgba(0,153,102,.05);
+                border-radius: 5px;
 "
-            >云大健康 医你所病</p>
-          </el-col>
 
+            >
+
+            </el-container>
+          </el-col>
         </el-row>
         <el-row>
-          <el-col :offset="6" :span="10">
-            <el-input
-                v-model="uploadedImageUrl"
-                placeholder="你的图片网址在这里显示"
-                size="large" style="
-            border-radius: 70px;
-            border:  #55c048 1px solid;
-"
-            >
-            </el-input>
-          </el-col>
-          <el-col :span="3">
+          <el-col :span="11">
             <el-upload
                 :action="backUpload"
                 :before-upload="beforeUpload"
                 :on-success="onSuccess"
                 :limit="3"
+                drag
                 name="image"
-
             >
-            <el-button type="success" size="large" style="width: 7vw">
-              检查一下
-            </el-button>
-<!--              :auto-upload="true"-->
-<!--              :on-preview="handlePreview"-->
-<!--              :on-remove="handleRemove"-->
-<!--              :before-upload="beforeUpload"-->
-<!--              :on-exceed="handleExceed"-->
-<!--              :file-list="fileList"-->
-<!--              :on-change="handleChange"-->
+              <div style="width: 100%;height: 20vh;
+              margin: 2vh 1vw 2vh 1vw;
+              display: flex;align-items: center;justify-content: center;
+              flex-direction: column;">
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div >
+                  把文件拖拽至此
+                </div>
+              </div>
+
+            </el-upload>
+            <div v-if="uploadedImageUrl">
+              <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
+            </div>
+          </el-col>
+
+          <el-col :span="11" :offset="1">
+            <el-upload
+                drag
+                @click="null"
+                :auto-upload="false"
+                :disabled="true"
+            >
+              <div style="width: 100%;height: 20vh;
+              margin: 2vh 1vw 2vh 1vw;
+              display: flex;align-items: center;justify-content: center;
+              flex-direction: column;">
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div >
+                  在这显示图片
+                </div>
+              </div>
+
             </el-upload>
             <div v-if="uploadedImageUrl">
               <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
@@ -136,12 +139,58 @@ function onSuccess(res){
           </el-col>
 
         </el-row>
+        <el-row>
+          <el-col :span="11">
+            <el-upload
+                :action="backUpload"
+                :before-upload="beforeUpload"
+                :on-success="onSuccess"
+                :limit="3"
+                drag
+                name="image"
+            >
+              <div style="width: 100%;height: 20vh;
+              margin: 2vh 1vw 2vh 1vw;
+              display: flex;align-items: center;justify-content: center;
+              flex-direction: column;">
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div >
+                  把文件拖拽至此
+                </div>
+              </div>
 
+            </el-upload>
+            <div v-if="uploadedImageUrl">
+              <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
+            </div>
+          </el-col>
+
+          <el-col :span="11" :offset="1">
+            <el-upload
+                drag
+                @click="null"
+                :auto-upload="false"
+                :disabled="true"
+            >
+              <div style="width: 100%;height: 20vh;
+              margin: 2vh 1vw 2vh 1vw;
+              display: flex;align-items: center;justify-content: center;
+              flex-direction: column;">
+                <el-icon class="el-icon--upload"><upload-filled /></el-icon>
+                <div >
+                  在这显示图片
+                </div>
+              </div>
+
+            </el-upload>
+            <div v-if="uploadedImageUrl">
+              <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
+            </div>
+          </el-col>
+
+        </el-row>
       </el-main>
     </el-container>
-    <el-image class="backgrondTopImg" :src="DoctorBackgrond" fit="cover">
-
-    </el-image>
   </div>
 </template>
 
