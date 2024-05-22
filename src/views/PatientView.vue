@@ -15,7 +15,12 @@ function  toInquiry(){
       <el-header style="position: fixed;top: 0;width: 100vw;z-index: 20;background: white">
         <el-row style="height: 8vh;background: white">
           <el-col :span="6">
-            <main-logo :size="130"></main-logo>
+            <p class="flagFont" @click="toHome">
+              <el-icon :size="size" style="color:#eac922;">
+                <Help/>
+              </el-icon>
+              行人重识别
+            </p>
           </el-col>
           <el-col :span="5">&nbsp;
           </el-col>
@@ -123,6 +128,16 @@ function  toInquiry(){
 </template>
 
 <style scoped>
+.flagFont{
+  font-weight: bolder;
+  font-size: 1.6vw;
+  color: #228def;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: YouYuan;
+  cursor: pointer;
+}
 .title {
   font-size: 2.8vw;
   font-weight: bolder;
