@@ -1,6 +1,7 @@
 <script setup>
 import {useRouter} from "vue-router";
 import MainLogo from "@/components/icons/MainLogo.vue";
+import Card from "@/views/Card.vue";
 const router= useRouter()
 function  toInquiry(){
   router.push({
@@ -45,7 +46,6 @@ function  toInquiry(){
       <div style="height: 85vh;width: 99vw">&nbsp;</div>
       <el-main style="background: white;border-radius: 18px;width: 99vw; overflow-y:hidden; overflow-x:hidden">
         <el-row >
-
           <el-col :span="10" >
             <el-carousel  arrow="never" height="60vh">
               <el-carousel-item  style="background: whitesmoke;border-radius: 15px" >
@@ -76,7 +76,8 @@ function  toInquiry(){
               <br />
 
             </p>
-            <el-image src="src/assets/camera.png" style="border-radius: 15px;margin-top: 12vh"></el-image>
+            <!--            <el-image src="src/assets/camera.png" style="border-radius: 15px;margin-top: 12vh"></el-image>-->
+            <Card data-image="src/assets/camera.png"> </Card>
           </el-col>
           <el-col :span="1" style="display: flex;justify-content: center;align-items: center">
             <el-divider direction="vertical" style="height: 100%;" />
@@ -91,7 +92,8 @@ function  toInquiry(){
               <br />
 
             </p>
-            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 20vh;display: flex;justify-content: center"></el-image>
+            <!--            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 20vh;display: flex;justify-content: center"></el-image>-->
+            <Card data-image="src/assets/yolo.png"> </Card>
           </el-col>
 
         </el-row>
