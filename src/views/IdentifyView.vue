@@ -1,59 +1,59 @@
 <script setup>
-import {ref, onMounted} from 'vue';
-import {ElMessage} from 'element-plus';
-import MainLogo from "@/components/icons/MainLogo.vue"
+import { ref } from 'vue';
+import { ElMessage } from 'element-plus';
+import axios from 'axios';
+import { PictureFilled, PictureRounded } from "@element-plus/icons-vue";
+
 const fileList = ref([]); // 用于存储文件列表
 const uploadedImageUrl = ref(''); // 存储上传成功后的图片URL
-let backUpload = "http://localhost:8310/api/images/upload"
+const backUpload = "http://localhost:5000/api/video/upload";
+
+const headers = {
+  'Content-Type': 'multipart/form-data'
+};
+
 // 图片上传前的处理
 const beforeUpload = (rawFile) => {
-  const isJPGorPNG = rawFile.type === 'image/jpeg' || rawFile.type === 'image/png';
-  const isLt2M = rawFile.size / 1024 / 1024 < 1000;
+  const fileType = rawFile.type;
+  const isVideo = fileType.includes('video');
+  const isLt1GB = rawFile.size / 1024 / 1024 < 1000;
 
-  if (!isJPGorPNG) {
-    ElMessage.error('上传图片只能是 JPG 或 PNG 格式!');
+  if (!isVideo) {
+    ElMessage.error('只能上传视频文件！');
+    return false;
   }
-  if (!isLt2M) {
-    ElMessage.error('图片大小不能超过 1000MB!');
+  if (!isLt1GB) {
+    ElMessage.error('视频大小不能超过 1000MB!');
+    return false;
   }
-  return isJPGorPNG && isLt2M;
+  return true;
+};
+
+// 自定义上传方法
+const doUpload = (file) => {
+  const formData = new FormData();
+  formData.append('video', file);
+
+  axios.post(backUpload, formData, { headers })
+      .then(response => {
+        ElMessage.success('文件上传成功');
+        uploadedImageUrl.value = response.data.url; // 根据后端返回的数据更新URL
+      })
+      .catch(error => {
+        ElMessage.error(`文件上传失败: ${error.message}`);
+      });
 };
 
 // 文件状态改变时的处理，包括上传成功和失败
-const handleChange = (uploadFile, fileList) => {
-  if (uploadFile.status === 'success') {
-    handleUploadSuccess(uploadFile.response.data.url);
-  } else if (uploadFile.status === 'failed') {
-    ElMessage.error(`文件上传失败: ${uploadFile.message}`);
+const handleChange = (file, fileList) => {
+  if (file.status === 'success') {
+    ElMessage.success('文件上传成功');
+  } else if (file.status === 'fail') {
+    ElMessage.error('文件上传失败');
+  } else if (file.raw) {
+    doUpload(file.raw);
   }
 };
-
-
-// 文件超出限制时的处理
-const handleExceed = (files, fileList) => {
-  ElMessage.warning(`当前限制选择 ${files.length} 个文件，已选择 ${files.length + fileList.length} 个文件`);
-};
-
-// 文件移除时的处理
-const handleRemove = (file, fileList) => {
-  // 这里可以根据需要添加删除逻辑，比如从服务器删除文件
-  console.log('文件被移除:', file);
-};
-
-// 文件预览的处理（如果需要）
-const handlePreview = (file) => {
-  console.log('预览文件:', file);
-};
-
-function onSuccess(res) {
-  ElMessage({
-    message: '上传文件成功',
-    type: 'success',
-  })
-  uploadedImageUrl.value = res
-  console.log(uploadedImageUrl.value)
-  window.open(uploadedImageUrl.value)
-}
 </script>
 
 <template>
@@ -108,13 +108,13 @@ function onSuccess(res) {
         <el-row>
           <el-col :span="12">
             <el-upload
-                :action="backUpload"
                 :before-upload="beforeUpload"
-                :on-success="onSuccess"
-                :limit="3"
+                :on-change="handleChange"
+                :limit="1"
+                :auto-upload="false"
                 drag
-                name="image"
-                style="margin: 2vh 1vw 2vh 0.5vw;border-color: black"
+                name="video"
+                style="margin: 20px; border: 1px dashed #ccc;"
             >
               <div style="width: 100%;height: 40vh;
               display: flex;align-items: center;justify-content: center;
