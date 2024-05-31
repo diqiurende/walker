@@ -38,6 +38,7 @@ const doUpload = (file) => {
       .then(response => {
         ElMessage.success('文件上传成功');
         uploadedImageUrl.value = response.data.url; // 根据后端返回的数据更新URL
+
       })
       .catch(error => {
         ElMessage.error(`文件上传失败: ${error.message}`);
@@ -132,17 +133,15 @@ const handleChange = (file, fileList) => {
               <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
             </div>
           </el-col>
-
-          <el-col :span="12" >
+          <el-col :span="12">
             <el-upload
-                drag
-                @click="null"
+                :before-upload="beforeUpload"
+                :on-change="handleChange"
+                :limit="1"
                 :auto-upload="false"
-                :disabled="true"
-                style="margin: 2vh 1vw 2vh 1vw;
-
-"
-
+                drag
+                name="video"
+                style="margin: 20px; border: 1px dashed #ccc;"
             >
               <div style="width: 100%;height: 40vh;
               display: flex;align-items: center;justify-content: center;
@@ -160,6 +159,8 @@ const handleChange = (file, fileList) => {
               <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
             </div>
           </el-col>
+
+
 
         </el-row>
 
