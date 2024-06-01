@@ -3,6 +3,7 @@ import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import axios from 'axios';
 import { PictureFilled, PictureRounded } from "@element-plus/icons-vue";
+import MainLogo from "@/components/icons/MainLogo.vue";
 
 const fileList = ref([]); // 用于存储文件列表
 const uploadedImageUrl = ref(''); // 存储上传成功后的图片URL

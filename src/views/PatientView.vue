@@ -57,8 +57,14 @@ function  toInquiry(){
 "
                 >
                   <p class="aliTitle1">智能安防已进入行业大发展时期&nbsp;</p>
-                  <p class="aliDescription" style="height: 10vh">近年来，中国智能安防行业相关国家政策频出，主要政策内容围绕鼓励安防行业与互联网、5G领域技术结合，推广智能安防应用等。</p>
+                  <p class="aliDescription" style="height: 10vh;font-size: 1.1vw">传统监控分析投入大，罪犯识别准确
+                    率低<br>随着城市化进程的加快和人口流动的增多，人
+                    口走丢、走失与走散频次上升。《中国走失人
+                    口白皮书(2020)》数据显示，在整个 2020 年期
+                    间，我国走失人次达到了 100 万，每天处于或
+                    经历走失状态的人次为 2739 </p>
                 </div>
+
               </el-carousel-item>
             </el-carousel>
           </el-col>
