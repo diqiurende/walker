@@ -1,11 +1,11 @@
 <script setup>
 import { ref, onMounted } from 'vue';
-
-
 import { ElMessage, ElLoading } from 'element-plus';
 import axios from 'axios';
 import { PictureRounded } from "@element-plus/icons-vue";
 import MainLogo from "@/components/icons/MainLogo.vue";
+import VideoPlayer from "@/views/VideoPlayer.vue"
+
 const videoUrl = ref("https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8");
 const fileList = ref([]); // 存储文件列表
 const videoUrls = ref([]); // 存储上传和处理后的视频URL
@@ -133,7 +133,7 @@ const handleChange = (file, newFileList) => {
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="8">
+          <el-col :span="6">
             <el-upload
                 :before-upload="beforeUpload"
                 :on-change="handleChange"
@@ -167,11 +167,28 @@ const handleChange = (file, newFileList) => {
 <!--            </div>-->
 
           </el-col>
-          <el-col :span="8">
-            <div>
-              <video src="/src/video/input/video1_20240605_125439.mp4" controls></video>
+
+          <el-col :span="9">
+                11111111111111
+            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
+              <VideoPlayer id="a"></VideoPlayer>
             </div>
+
+              <VideoPlayer id="b"></VideoPlayer>
+
           </el-col>
+
+          <el-col  :span="8">
+                2222222222222
+            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
+              <VideoPlayer></VideoPlayer>
+            </div>
+
+            <VideoPlayer></VideoPlayer>
+
+          </el-col>
+
+
         </el-row>
       </el-main>
     </el-container>
