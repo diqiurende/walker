@@ -169,24 +169,25 @@ const handleChange = (file, newFileList) => {
           </el-col>
 
           <el-col :span="9">
-                11111111111111
+
             <div style="display: flex;flex-direction: row;background-color: #a8abb2">
-              <VideoPlayer id="a"></VideoPlayer>
+              <VideoPlayer newid="dplayer"></VideoPlayer>
             </div>
 
-              <VideoPlayer id="b"></VideoPlayer>
+            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
+              <VideoPlayer newid="two"></VideoPlayer>
+            </div>
+
+
 
           </el-col>
 
-          <el-col  :span="8">
-                2222222222222
+          <el-col :span="8">
             <div style="display: flex;flex-direction: row;background-color: #a8abb2">
-              <VideoPlayer></VideoPlayer>
+              <VideoPlayer newid="three"></VideoPlayer>
             </div>
-
-            <VideoPlayer></VideoPlayer>
-
           </el-col>
+
 
 
         </el-row>
