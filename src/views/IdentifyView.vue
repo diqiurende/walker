@@ -155,7 +155,7 @@ const handleChange = (file, newFileList) => {
                 </div>
               </div>
             </el-upload>
-            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 12vw" @click="uploadVideos">开始检测</el-button>
+            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 8vw" @click="uploadVideos">开始检测</el-button>
 
 <!--            <div v-if="videoUrls.length" class="original-videos">-->
 <!--              <div v-for="(url, index) in videoUrls" :key="index" class="video-container">-->
@@ -168,10 +168,10 @@ const handleChange = (file, newFileList) => {
 
           </el-col>
 
-          <el-col :span="9">
+          <el-col :span="8">
 
             <div style="display: flex;flex-direction: row;background-color: #a8abb2">
-              <VideoPlayer newid="dplayer"></VideoPlayer>
+              <VideoPlayer newid="dplayer" url="https://api.dogecloud.com/player/get.m3u8?vcode=5ac682e6f8231991&userId=17&ext=.m3u8"></VideoPlayer>
             </div>
 
             <div style="display: flex;flex-direction: row;background-color: #a8abb2">
@@ -181,9 +181,11 @@ const handleChange = (file, newFileList) => {
 
 
           </el-col>
-
+          <el-col :span="0.4" style="height: 100%  ">
+            <el-divider direction="vertical" style="height: 70vh;background-color: #0e0e0e"></el-divider>
+          </el-col>
           <el-col :span="8">
-            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
+            <div style="display: flex;flex-direction: row;background-color: #a8abb2;width: 40vw">
               <VideoPlayer newid="three"></VideoPlayer>
             </div>
           </el-col>
