@@ -13,13 +13,6 @@ let loadingInstance = null; // 存储加载实例
 
 
 
-const videoPlayer = ref(null);
-
-// 在组件加载时，将视频加载到video标签中
-const videoSrc = 'src/video/input/video1_20240605_125439.mp4'; // 相对路径
-onMounted(() => {
-  videoPlayer.value.src = videoSrc;
-});
 
 
 const backUpload = "http://localhost:5000/process_videos";
@@ -172,8 +165,11 @@ const handleChange = (file, newFileList) => {
 <!--                </video>-->
 <!--              </div>-->
 <!--            </div>-->
+
+          </el-col>
+          <el-col :span="8">
             <div>
-              <video ref="videoPlayer" controls></video>
+              <video src="/src/video/input/video1_20240605_125439.mp4" controls></video>
             </div>
           </el-col>
         </el-row>
