@@ -2,18 +2,19 @@
 import { ref } from 'vue';
 import { ElMessage } from 'element-plus';
 import axios from 'axios';
-import { PictureFilled, PictureRounded } from "@element-plus/icons-vue";
+import { PictureRounded } from "@element-plus/icons-vue";
 import MainLogo from "@/components/icons/MainLogo.vue";
 
-const fileList = ref([]); // 用于存储文件列表
-const uploadedImageUrl = ref(''); // 存储上传成功后的图片URL
-const backUpload = "http://localhost:5000/api/video/upload";
+const fileList = ref([]); // 存储文件列表
+const uploadedVideoUrl = ref(''); // 存储上传成功后的视频URL
+const originalVideoUrls=ref([]);//原始视频url
+const backUpload = "http://localhost:5000/process_videos";
 
 const headers = {
   'Content-Type': 'multipart/form-data'
 };
 
-// 图片上传前的处理
+// 视频上传前的处理
 const beforeUpload = (rawFile) => {
   const fileType = rawFile.type;
   const isVideo = fileType.includes('video');
@@ -29,33 +30,49 @@ const beforeUpload = (rawFile) => {
   }
   return true;
 };
-
 // 自定义上传方法
-const doUpload = (file) => {
+const uploadVideos = () => {
+  if (fileList.value.length !== 2) {
+    ElMessage.error('请上传两个视频文件');
+    return;
+  }
   const formData = new FormData();
-  formData.append('video', file);
+  formData.append('video1', fileList.value[0].raw);
+  formData.append('video2', fileList.value[1].raw);
 
-  axios.post(backUpload, formData, { headers })
+  axios.post(backUpload, formData, {
+    headers,
+    responseType: 'blob'
+  })
       .then(response => {
-        ElMessage.success('文件上传成功');
-        uploadedImageUrl.value = response.data.url; // 根据后端返回的数据更新URL
-
+        ElMessage.success('视频检测完成');
+        uploadedVideoUrl.value = URL.createObjectURL(response.data);
       })
       .catch(error => {
-        ElMessage.error(`文件上传失败: ${error.message}`);
+        ElMessage.error(`视频检测失败: ${error.message}`);
       });
 };
 
 // 文件状态改变时的处理，包括上传成功和失败
-const handleChange = (file, fileList) => {
+const handleChange = (file, newFileList) => {
+  fileList.value = newFileList;
+  originalVideoUrls.value = [];
+  newFileList.forEach(file => {
+    const reader = new FileReader();
+    reader.onload = (e) => {
+      originalVideoUrls.value.push(URL.createObjectURL(file.raw));
+      console.log('视频URL:', URL.createObjectURL(file.raw)); // 在这里输出视频的 URL
+    };
+    reader.readAsArrayBuffer(file.raw);
+  });
+
   if (file.status === 'success') {
     ElMessage.success('文件上传成功');
   } else if (file.status === 'fail') {
     ElMessage.error('文件上传失败');
-  } else if (file.raw) {
-    doUpload(file.raw);
   }
 };
+
 </script>
 
 <template>
@@ -108,13 +125,14 @@ const handleChange = (file, fileList) => {
           </el-col>
         </el-row>
         <el-row>
-          <el-col :span="12">
+          <el-col :span="8">
             <el-upload
                 :before-upload="beforeUpload"
                 :on-change="handleChange"
-                :limit="1"
+                :limit="2"
                 :auto-upload="false"
                 drag
+                multiple
                 name="video"
                 style="margin: 20px; border: 1px dashed #ccc;"
             >
@@ -125,41 +143,25 @@ const handleChange = (file, fileList) => {
                   <PictureRounded />
                 </el-icon>
                 <div>
-                  把文件拖拽至此
+                  把两个文件拖拽至此
                 </div>
               </div>
 
             </el-upload>
-            <div v-if="uploadedImageUrl">
-              <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
-            </div>
-          </el-col>
-          <el-col :span="12">
-            <el-upload
-                :before-upload="beforeUpload"
-                :on-change="handleChange"
-                :limit="1"
-                :auto-upload="false"
-                drag
-                name="video"
-                style="margin: 20px; border: 1px dashed #ccc;"
-            >
-              <div style="width: 100%;height: 40vh;
-              display: flex;align-items: center;justify-content: center;
-              flex-direction: column;">
-                <el-icon class="el-icon--upload">
-                  <PictureRounded />
-                </el-icon>
-                <div>
-                  把文件拖拽至此
-                </div>
-              </div>
+            <el-button type="primary"style="display: flex;justify-items: center;align-items: center;margin-left: 12vw" @click="uploadVideos">开始检测</el-button>
 
-            </el-upload>
-            <div v-if="uploadedImageUrl">
-              <img :src="uploadedImageUrl" alt="Uploaded Image" style="=width: 10vw;height: 10vh">
+            <div v-if="originalVideoUrls.length" class="original-videos">
+              <div v-for="(url, index) in originalVideoUrls" :key="index" class="video-container">
+                <video width="320" height="240" controls>
+                  <source src="http://localhost:5173/30feaa84-50a2-4165-8858-568e1b681117" type="video/mp4">
+                  Your browser does not support the video tag.
+                </video>
+
+
+              </div>
             </div>
           </el-col>
+
 
 
 
@@ -217,5 +219,14 @@ const handleChange = (file, fileList) => {
 .common-layout{
   height: 100vh;
   background-color: rgb(248, 248, 248)
+}
+.original-videos {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+}
+
+.video-container {
+  margin: 10px;
 }
 </style>

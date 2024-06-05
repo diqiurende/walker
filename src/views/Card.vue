@@ -33,16 +33,16 @@ export default {
     const mousePY = computed(() => mouseY.value / height.value);
 
     const cardStyle = computed(() => {
-      const rX = mousePX.value * 6;
-      const rY = mousePY.value * -6;
+      const rX = mousePX.value * 3;
+      const rY = mousePY.value * -3;
       return {
         transform: `rotateY(${rX}deg) rotateX(${rY}deg)`
       };
     });
 
     const cardBgTransform = computed(() => {
-      const tX = mousePX.value * -5;
-      const tY = mousePY.value * -5;
+      const tX = mousePX.value * -3;
+      const tY = mousePY.value * -3;
       return {
         transform: `translateX(${tX}px) translateY(${tY}px)`
       };

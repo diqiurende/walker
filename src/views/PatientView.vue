@@ -57,12 +57,12 @@ function  toInquiry(){
 "
                 >
                   <p class="aliTitle1">智能安防已进入行业大发展时期&nbsp;</p>
-                  <p class="aliDescription" style="height: 10vh;font-size: 1.1vw">传统监控分析投入大，罪犯识别准确
-                    率低<br>随着城市化进程的加快和人口流动的增多，人
+                  <p class="aliDescription" style="height: 3vh;font-size: 1.1vw;margin-left: 8vw;color: #0e0e0e">传统监控分析投入大，罪犯识别准确率低 </p>
+                  <p style="margin: 1vw">随着城市化进程的加快和人口流动的增多，人
                     口走丢、走失与走散频次上升。《中国走失人
                     口白皮书(2020)》数据显示，在整个 2020 年期
                     间，我国走失人次达到了 100 万，每天处于或
-                    经历走失状态的人次为 2739 </p>
+                    经历走失状态的人次为 2739</p>
                 </div>
 
               </el-carousel-item>
@@ -74,12 +74,15 @@ function  toInquiry(){
           </el-col>
 
           <el-col :span="6">
-            <p class="aliTitle" style="background: transparent">
-              中共中央办公厅、国务院办公厅印发《关于加强社会治安防控体系建设的意见》
+            <p class="aliTitle" style="background: transparent; font-size: 0.9vw">
+              《“十四五” 城乡社区服务体系建设规划》
             </p>
             <p class="aliDescription" >
-              加强信息资源共享和深度应用，构建纵向贯通、横向集成的平安建设信息化综合平台。提高系统互联、信息互通和资源共享程度，强化信息资源整合，增强预防和打击犯罪的能力。将社会治安防控信息化纳入智慧城市建设，运用新一代技术提升公共安全管理水平，建立健全信息安全保障体系。
-              <br />
+                &nbsp; &nbsp;国务院印发《“十四五”城乡社区服务体系建设规划》中指
+              出，推动社区物业设备设施、安防等智能化改造升级。促进人工智能和实体经济
+              深度融合，要把握新一代人工智能发展的特点，坚持以市场需求为导向，以产业
+              应用为目标，深化改革创新，优化制度环境，激发企业创新活力和内生动力。
+              <br /> <br /> <br /> <br /> <br /> <br /> <br />
 
             </p>
             <!--            <el-image src="src/assets/camera.png" style="border-radius: 15px;margin-top: 12vh"></el-image>-->
@@ -94,8 +97,14 @@ function  toInquiry(){
               YOLOv8：行人重识别的技术突破
             </p>
             <p class="aliDescription" >
-              YOLOv8作为YOLO系列的最新版本，对于行人重识别具有重要意义。其高效的实时检测能力使其在监控视频和智能安防系统等场景中表现出色，能够快速准确地识别行人并进行跟踪。同时，YOLOv8具有精确的目标定位能力，可以提供更高的检测精度和更精确的目标定位，为身份重识别提供了可靠基础。
-              <br />
+              采用了最新的 YOLOv8（You
+              Only Look Once version 8）技术，这是一种先进的目标检测算法，它能够在保
+              持高速处理的同时，提供高精度的物体识别。在面对海量图像分类的挑战时，
+              YOLOv8 通过其强大的特征提取能力和高效的分类策略，能够快速准确地将图像
+              中的不同元素归类。这意味着即使在复杂的公共环境中，该系统也能够有效地识
+              别出人、车辆和其他障碍物，从而为盲人用户提供精确的导航信息。通过云端的
+              集中处理，YOLOv8 技术不仅提升了监控图像的处理质量，也为盲人用户带来了
+              更为安全和便捷的出行体验。 <br />
 
             </p>
             <!--            <el-image fit="cover" src="src/assets/yolo.png" style="border-radius: 15px;margin-top: 14vh;height: 20vh;display: flex;justify-content: center"></el-image>-->
@@ -128,7 +137,7 @@ function  toInquiry(){
   <div class="videoContainer">
     <video class="fullscreenVideo" id="bgVid" playsinline="" autoplay="" muted="" loop="">
       <source
-          src="../assets/pc_cn.mp4"
+          src="../assets/walker_video.mp4"
           type="video/mp4">
     </video>
   </div>
@@ -217,8 +226,9 @@ function  toInquiry(){
 }
 
 .fullscreenVideo {
-  width: 100vw;
   overflow: hidden;
+  width: 100vw;
+  height: 80vh;
 }
 
 .underclass {
