@@ -16,9 +16,11 @@
     "element-plus": "^2.6.3",
     "hls.js": "^1.5.11",
     "pinia": "^2.1.7",
+    "plyr": "^3.7.8",
     "videojs-contrib-hls": "^5.15.0",
     "vue": "^3.4.21",
     "vue-dplayer": "^0.0.10",
+    "vue-plyr": "^7.0.0",
     "vue-router": "^4.3.0",
     "vue-video-player": "^6.0.0"
   },

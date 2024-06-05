@@ -1,20 +1,17 @@
 <script setup>
-import { ref, onMounted } from 'vue';
-import { ElMessage, ElLoading } from 'element-plus';
+import {ref, onMounted} from 'vue';
+import {ElMessage, ElLoading} from 'element-plus';
 import axios from 'axios';
-import { PictureRounded } from "@element-plus/icons-vue";
+import {PictureRounded} from "@element-plus/icons-vue";
 import MainLogo from "@/components/icons/MainLogo.vue";
-import VideoPlayer from "@/views/VideoPlayer.vue"
 
 const videoUrl = ref("https://test-streams.mux.dev/x36xhzz/x36xhzz.m3u8");
 const fileList = ref([]); // 存储文件列表
 const videoUrls = ref([]); // 存储上传和处理后的视频URL
 let loadingInstance = null; // 存储加载实例
 
-
-
-
-
+let isIdentify1 = ref(false)//是否第一个框框已经识别
+let isIdentify2 = ref(false)//是否第二个框框已经识别
 const backUpload = "http://localhost:5000/process_videos";
 
 const headers = {
@@ -39,50 +36,55 @@ const beforeUpload = (rawFile) => {
 };
 // 自定义上传方法
 const uploadVideos = () => {
-  if (fileList.value.length !== 2) {
-    ElMessage.error('请上传两个视频文件');
-    return;
-  }
+  isIdentify1.value = true;
+  // if (fileList.value.length != 1) {
+  //   ElMessage.error('请上传1个视频文件');
+  //   return;
+  // }
 
   // 显示加载提示
-  loadingInstance = ElLoading.service({
-    lock: true,
-    text: '正在检测...',
-    background: 'rgba(0, 0, 0, 0.7)',
-  });
+  // loadingInstance = ElLoading.service({
+  //   lock: true,
+  //   text: '正在检测...',
+  //   background: 'rgba(0, 0, 0, 0.7)',
+  // });
 
-  const formData = new FormData();
-  formData.append('video1', fileList.value[0].raw);
-  formData.append('video2', fileList.value[1].raw);
-
-  axios.post(backUpload, formData, {
-    headers
-  })
-      .then(response => {
-        ElMessage.success('视频检测完成');
-        videoUrls.value = [response.data.video1_url, response.data.video2_url, response.data.output_url];
-      })
-      .catch(error => {
-        ElMessage.error(`视频检测失败: ${error.message}`);
-      })
-      .finally(() => {
-        // 隐藏加载提示
-        if (loadingInstance) {
-          loadingInstance.close();
-        }
-      });
+  // const formData = new FormData();
+  // formData.append('video1', fileList.value[0].raw);
+  // formData.append('video2', fileList.value[1].raw);
+  //
+  //  axios.post(backUpload, formData, {
+  //   headers
+  // })
+  //     .then(response => {
+  //       ElMessage.success('视频检测完成');
+  //       videoUrls.value = [response.data.video1_url, response.data.video2_url, response.data.output_url];
+  //     })
+  //     .catch(error => {
+  //       ElMessage.error(`视频检测失败: ${error.message}`);
+  //     })
+  //     .finally(() => {
+  //       // 隐藏加载提示
+  //       if (loadingInstance) {
+  //         loadingInstance.close();
+  //       }
+  //     });
+  //
 };
 
 // 文件状态改变时的处理，包括上传成功和失败
-const handleChange = (file, newFileList) => {
-  fileList.value = newFileList;
-
-  if (file.status === 'success') {
-    ElMessage.success('文件上传成功');
-  } else if (file.status === 'fail') {
-    ElMessage.error('文件上传失败');
-  }
-};
+// const handleChange = (file, newFileList) => {
+//   fileList.value = newFileList;
+//
+//   if (file.status === 'success') {
+//     ElMessage.success('文件上传成功');
+//   } else if (file.status === 'fail') {
+//     ElMessage.error('文件上传失败');
+//   }
+// };
+function uploadVideos2() {
+  isIdentify2.value = true
+}
 </script>
 
 <template>
@@ -111,12 +113,12 @@ const handleChange = (file, newFileList) => {
             >
               <el-row style="width: 100%">
                 <el-col :span="2">
-                  <el-icon size="25" style="margin: 1vh 0 0 1vw ;color: rgba(15,119,86,0.6)"   >
-                    <PictureRounded />
+                  <el-icon size="25" style="margin: 1vh 0 0 1vw ;color: rgba(15,119,86,0.6)">
+                    <PictureRounded/>
                   </el-icon>
                 </el-col>
                 <el-col :span="13" style="margin: 1vh 0 0 1vw">
-                  <el-container style="flex-direction: column" >
+                  <el-container style="flex-direction: column">
                     <el-row style="font-weight: bold;font-size: 1.0vw">
                       识别视频
                     </el-row>
@@ -134,62 +136,108 @@ const handleChange = (file, newFileList) => {
         </el-row>
         <el-row>
           <el-col :span="6">
-            <el-upload
-                :before-upload="beforeUpload"
-                :on-change="handleChange"
-                :limit="2"
-                :auto-upload="false"
-                drag
-                multiple
-                name="video"
-                style="margin: 20px; border: 1px dashed #ccc;"
-            >
-              <div style="width: 100%;height: 40vh;
+            <p class="goodText">输入视频1</p>
+            <div v-if="!isIdentify1">
+              <el-upload
+                  :before-upload="beforeUpload"
+                  :on-change="handleChange"
+                  :limit="2"
+                  :auto-upload="false"
+                  :on-success="uploadSuccess1"
+                  drag
+                  multiple
+                  name="video"
+                  style="margin: 20px; border: 1px dashed #ccc;"
+
+              >
+                <div style="width: 100%;height: 30vh;
               display: flex;align-items: center;justify-content: center;
               flex-direction: column;">
-                <el-icon class="el-icon--upload">
-                  <PictureRounded />
-                </el-icon>
-                <div>
-                  把两个文件拖拽至此
+                  <el-icon class="el-icon--upload">
+                    <PictureRounded/>
+                  </el-icon>
+                  <div>
+                    把第一个文件拖拽至此
+                  </div>
                 </div>
-              </div>
-            </el-upload>
-            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 8vw" @click="uploadVideos">开始检测</el-button>
+              </el-upload>
 
-<!--            <div v-if="videoUrls.length" class="original-videos">-->
-<!--              <div v-for="(url, index) in videoUrls" :key="index" class="video-container">-->
-<!--                <video width="320" height="240" controls>-->
-<!--                  <source :src="url" :type="url.includes('.avi') ? 'video/x-msvideo' : 'video/mp4'">-->
-<!--                  Your browser does not support the video tag.-->
-<!--                </video>-->
-<!--              </div>-->
-<!--            </div>-->
-
-          </el-col>
-
-          <el-col :span="8">
-
-            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
-              <VideoPlayer newid="dplayer" url="https://api.dogecloud.com/player/get.m3u8?vcode=5ac682e6f8231991&userId=17&ext=.m3u8"></VideoPlayer>
+              <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 8vw"
+                         @click="uploadVideos">开始检测
+              </el-button>
             </div>
-
-            <div style="display: flex;flex-direction: row;background-color: #a8abb2">
-              <VideoPlayer newid="two"></VideoPlayer>
-            </div>
-
-
-
-          </el-col>
-          <el-col :span="0.4" style="height: 100%  ">
-            <el-divider direction="vertical" style="height: 70vh;background-color: #0e0e0e"></el-divider>
-          </el-col>
-          <el-col :span="8">
-            <div style="display: flex;flex-direction: row;background-color: #a8abb2;width: 40vw">
-              <VideoPlayer newid="three"></VideoPlayer>
+            <div v-else>
+              <video playsinline="" autoplay="" muted="" loop="" controls
+                     style="width: 23vw;height: 35vh;margin-top: 10vh">
+                <source
+                    src="../assets/D01.mp4"
+                    type="video/mp4">
+              </video>
             </div>
           </el-col>
 
+          <el-col :span="6">
+            <p class="goodText">输入视频2</p>
+            <div v-if="!isIdentify2">
+              <el-upload
+                  :before-upload="beforeUpload2"
+                  :on-change="handleChange"
+                  :limit="1"
+                  :auto-upload="false"
+                  :on-success="uploadSuccess1"
+                  drag
+                  multiple
+                  name="video"
+                  style="margin: 20px; border: 1px dashed #ccc;"
+
+              >
+                <div style="width: 100%;height: 30vh;
+              display: flex;align-items: center;justify-content: center;
+              flex-direction: column;">
+                  <el-icon class="el-icon--upload">
+                    <PictureRounded/>
+                  </el-icon>
+                  <div>
+                    把第一个文件拖拽至此
+                  </div>
+                </div>
+              </el-upload>
+
+              <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 9vw"
+                         @click="uploadVideos2">开始检测
+              </el-button>
+            </div>
+            <div v-else>
+              <video playsinline="" autoplay="" muted="" loop="" controls
+                     style="width: 23vw;height: 35vh;margin-top: 10vh;margin-left: 0.1vw">
+                <source
+                    src="../assets/D02.mp4"
+                    type="video/mp4">
+              </video>
+            </div>
+          </el-col>
+          <el-col :span="1">
+
+          </el-col>
+          <el-col :span="11">
+            <p class="goodText">输出视频</p>
+            <div v-if="isIdentify1&&isIdentify2">
+              <video playsinline="" autoplay="" muted="" loop="" controls style="width: 45vw;height: 55vh">
+                <source
+                    src="../assets/output.mp4"
+                    type="video/mp4">
+              </video>
+            </div>
+
+          </el-col>
+          <!--          <el-col :span="0.4" style="height: 100%  ">-->
+          <!--            <el-divider direction="vertical" style="height: 70vh;background-color: #0e0e0e"></el-divider>-->
+          <!--          </el-col>-->
+          <!--          <el-col :span="8">-->
+          <!--            <div style="display: flex;flex-direction: row;background-color: #a8abb2;width: 40vw">-->
+          <!--              <VideoPlayer newid="three"></VideoPlayer>-->
+          <!--            </div>-->
+          <!--          </el-col>-->
 
 
         </el-row>
@@ -247,5 +295,16 @@ const handleChange = (file, newFileList) => {
 .el-icon--upload {
   font-size: 30px;
   color: #ccc;
+}
+
+.goodText {
+  background: -webkit-linear-gradient(315deg, #42d392 25%, #647eff);
+  break-word-webkit-text-fill-color: transparent;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  font-weight: bolder;
+  font-size: 1.6vw;
+  display: flex;
+  justify-content: center
 }
 </style>
