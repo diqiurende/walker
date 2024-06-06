@@ -12,11 +12,15 @@ let loadingInstance = null; // 存储加载实例
 
 let isIdentify1 = ref(false)//是否第一个框框已经识别
 let isIdentify2 = ref(false)//是否第二个框框已经识别
+let isResult =ref(false)
 const backUpload = "http://localhost:5000/process_videos";
 
 const headers = {
   'Content-Type': 'multipart/form-data'
 };
+
+const video1File = ref(null);
+const video2File = ref(null);
 
 // 视频上传前的处理
 const beforeUpload = (rawFile) => {
@@ -35,12 +39,11 @@ const beforeUpload = (rawFile) => {
   return true;
 };
 // 自定义上传方法
-const uploadVideos = () => {
+const handvideo1 = (file) => {
   isIdentify1.value = true;
-  // if (fileList.value.length != 1) {
-  //   ElMessage.error('请上传1个视频文件');
-  //   return;
-  // }
+  console.log(isIdentify1.value);
+  video1File.value = file.raw;
+  console.log(video1File.value);
 
   // 显示加载提示
   // loadingInstance = ElLoading.service({
@@ -49,41 +52,38 @@ const uploadVideos = () => {
   //   background: 'rgba(0, 0, 0, 0.7)',
   // });
 
-  // const formData = new FormData();
-  // formData.append('video1', fileList.value[0].raw);
-  // formData.append('video2', fileList.value[1].raw);
-  //
-  //  axios.post(backUpload, formData, {
-  //   headers
-  // })
-  //     .then(response => {
-  //       ElMessage.success('视频检测完成');
-  //       videoUrls.value = [response.data.video1_url, response.data.video2_url, response.data.output_url];
-  //     })
-  //     .catch(error => {
-  //       ElMessage.error(`视频检测失败: ${error.message}`);
-  //     })
-  //     .finally(() => {
-  //       // 隐藏加载提示
-  //       if (loadingInstance) {
-  //         loadingInstance.close();
-  //       }
-  //     });
-  //
+
 };
 
-// 文件状态改变时的处理，包括上传成功和失败
-// const handleChange = (file, newFileList) => {
-//   fileList.value = newFileList;
-//
-//   if (file.status === 'success') {
-//     ElMessage.success('文件上传成功');
-//   } else if (file.status === 'fail') {
-//     ElMessage.error('文件上传失败');
-//   }
-// };
-function uploadVideos2() {
+const  handvideo2 =(file) => {
   isIdentify2.value = true
+  video2File.value = file.raw;
+  console.log(video2File.value);
+};
+
+// 开始上传视频
+function startPost(){
+  const formData = new FormData();
+  formData.append('video1', video1File.value);
+  formData.append('video2', video2File.value);
+
+   axios.post(backUpload, formData, {
+    headers
+  })
+      .then(response => {
+        ElMessage.success('视频检测完成');
+        videoUrls.value = [response.data.video1_url, response.data.video2_url, response.data.output_url];
+      })
+      .catch(error => {
+        ElMessage.error(`视频检测失败: ${error.message}`);
+      })
+      .finally(() => {
+        // 隐藏加载提示
+        if (loadingInstance) {
+          loadingInstance.close();
+        }
+      });
+
 }
 </script>
 
@@ -140,7 +140,7 @@ function uploadVideos2() {
             <div v-if="!isIdentify1">
               <el-upload
                   :before-upload="beforeUpload"
-                  :on-change="handleChange"
+                  :on-change="handvideo1"
                   :limit="2"
                   :auto-upload="false"
                   :on-success="uploadSuccess1"
@@ -162,26 +162,24 @@ function uploadVideos2() {
                 </div>
               </el-upload>
 
-              <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 8vw"
-                         @click="uploadVideos">开始检测
-              </el-button>
+
             </div>
-            <div v-else>
-              <video playsinline="" autoplay="" muted="" loop="" controls
-                     style="width: 23vw;height: 35vh;margin-top: 10vh">
-                <source
-                    src="../assets/D01.mp4"
-                    type="video/mp4">
-              </video>
-            </div>
+<!--            <div v-else>-->
+<!--              <video playsinline="" autoplay="" muted="" loop="" controls-->
+<!--                     style="width: 23vw;height: 35vh;margin-top: 10vh">-->
+<!--                <source-->
+<!--                    src="../assets/D01.mp4"-->
+<!--                    type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
           </el-col>
 
           <el-col :span="6">
             <p class="goodText">输入视频2</p>
             <div v-if="!isIdentify2">
               <el-upload
-                  :before-upload="beforeUpload2"
-                  :on-change="handleChange"
+                  :before-upload="beforeUpload"
+                  :on-change="handvideo2"
                   :limit="1"
                   :auto-upload="false"
                   :on-success="uploadSuccess1"
@@ -203,9 +201,7 @@ function uploadVideos2() {
                 </div>
               </el-upload>
 
-              <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 9vw"
-                         @click="uploadVideos2">开始检测
-              </el-button>
+
             </div>
             <div v-else>
               <video playsinline="" autoplay="" muted="" loop="" controls
@@ -215,16 +211,19 @@ function uploadVideos2() {
                     type="video/mp4">
               </video>
             </div>
+            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 9vw"
+                       @click="startPost">开始检测
+            </el-button>
           </el-col>
           <el-col :span="1">
 
           </el-col>
           <el-col :span="11">
             <p class="goodText">输出视频</p>
-            <div v-if="isIdentify1&&isIdentify2">
+            <div v-if="isResult">
               <video playsinline="" autoplay="" muted="" loop="" controls style="width: 45vw;height: 55vh">
                 <source
-                    src="../assets/outputoutputTest2.mp4"
+                    src="../assets/result_20240606_110302.mp4"
                     type="video/mp4">
               </video>
             </div>
