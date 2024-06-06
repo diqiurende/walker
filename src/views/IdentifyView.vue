@@ -45,12 +45,7 @@ const handvideo1 = (file) => {
   video1File.value = file.raw;
   console.log(video1File.value);
 
-  // 显示加载提示
-  // loadingInstance = ElLoading.service({
-  //   lock: true,
-  //   text: '正在检测...',
-  //   background: 'rgba(0, 0, 0, 0.7)',
-  // });
+
 
 
 };
@@ -72,7 +67,7 @@ function startPost(){
   })
       .then(response => {
         ElMessage.success('视频检测完成');
-        videoUrls.value = [response.data.video1_url, response.data.video2_url, response.data.output_url];
+        videoUrls.value = [response.data.output];
       })
       .catch(error => {
         ElMessage.error(`视频检测失败: ${error.message}`);
@@ -211,7 +206,7 @@ function startPost(){
                     type="video/mp4">
               </video>
             </div>
-            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: 9vw"
+            <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: -3vw"
                        @click="startPost">开始检测
             </el-button>
           </el-col>
