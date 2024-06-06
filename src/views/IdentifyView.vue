@@ -198,7 +198,7 @@ function uploadVideos2() {
                     <PictureRounded/>
                   </el-icon>
                   <div>
-                    把第一个文件拖拽至此
+                    把第二个文件拖拽至此
                   </div>
                 </div>
               </el-upload>
@@ -224,7 +224,7 @@ function uploadVideos2() {
             <div v-if="isIdentify1&&isIdentify2">
               <video playsinline="" autoplay="" muted="" loop="" controls style="width: 45vw;height: 55vh">
                 <source
-                    src="../assets/output.mp4"
+                    src="../assets/outputoutputTest2.mp4"
                     type="video/mp4">
               </video>
             </div>
