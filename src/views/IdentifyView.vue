@@ -12,8 +12,11 @@ let loadingInstance = null; // 存储加载实例
 
 let isIdentify1 = ref(false)//是否第一个框框已经识别
 let isIdentify2 = ref(false)//是否第二个框框已经识别
-let outputPath = ref('../assets/video1_20240608_112911new.mp4');
+let outputPath = ref('/src/assets/video1_20240608_115441new.mp4');
+let output2=ref('src/assets/video2_20240608_195430new.mp4')
+let resultvideo=ref('/src/assets/result_20240608_221453new.mp4')
 let isResult =ref(false)
+const isProcessing = ref(false);
 const backUpload = "http://localhost:5000/process_videos";
 
 const headers = {
@@ -55,14 +58,17 @@ const handvideo1 = async (file) => {
     });
     // 获取完整的 outputpath
     const fullPath = response.data.outputpath;
+    let player = document.querySelector('#video1')
 
     // 截取 assets 目录及其后面的文件名部分
     const startIndex = fullPath.indexOf('assets\\');
-     outputPath = fullPath.substring(startIndex);
+     outputPath.value = fullPath.substring(startIndex);
     // 替换反斜杠为斜杠，并添加 ../ 表示上一级目录
-    outputPath = outputPath.replace(/\\/g, '/');
-    outputPath = `../${outputPath}`;
-    console.log(outputPath)
+    outputPath.value = outputPath.value.replace(/\\/g, '/');
+    outputPath.value = `/src/${outputPath.value}`;
+    player.src = outputPath. value
+    player.play()
+    console.log(outputPath.value)
 
   } catch (error) {
     ElMessage.error(`第一份视频上传失败: ${error.message}`);
@@ -72,34 +78,84 @@ const handvideo1 = async (file) => {
 
 };
 
-const  handvideo2 =(file) => {
-  isIdentify2.value = true
+const  handvideo2 =async (file) => {
+  isProcessing.value = true;
+  isIdentify2.value = true;
   video2File.value = file.raw;
   console.log(video2File.value);
+  const formData = new FormData();
+  formData.append('video', file.raw);
+
+  try {
+    const response = await axios.post('http://localhost:5000/upload_video2', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    // 获取完整的 outputpath
+    const fullPath = response.data.outputpath;
+    let player = document.querySelector('#video2')
+
+    // 截取 assets 目录及其后面的文件名部分
+    const startIndex = fullPath.indexOf('assets\\');
+    output2.value = fullPath.substring(startIndex);
+    // 替换反斜杠为斜杠，并添加 ../ 表示上一级目录
+    output2.value = output2.value.replace(/\\/g, '/');
+    output2.value = `/src/${output2.value}`;
+    player.src = output2.value
+    player.play()
+    console.log(output2.value)
+
+  } catch (error) {
+    ElMessage.error(`第一份视频上传失败: ${error.message}`);
+    isIdentify2.value = false;
+  }
 };
 
 // 开始上传视频
-function startPost(){
+async function startPost() {
+  const loadingInstance = ElLoading.service({
+    lock: true,
+    text: '正在检测...',
+    spinner: 'el-icon-loading',
+    background: 'rgba(0, 0, 0, 0.7)'
+  });
+
+  isResult=true;
+
   const formData = new FormData();
   formData.append('video1', video1File.value);
   formData.append('video2', video2File.value);
 
-   axios.post(backUpload, formData, {
-    headers
-  })
-      .then(response => {
-        ElMessage.success('视频检测完成');
-        videoUrls.value = [response.data.output];
-      })
-      .catch(error => {
-        ElMessage.error(`视频检测失败: ${error.message}`);
-      })
-      .finally(() => {
-        // 隐藏加载提示
-        if (loadingInstance) {
-          loadingInstance.close();
-        }
-      });
+ try {
+   const response = await axios.post(backUpload,formData,{
+     headers: {
+       'Content-Type': 'multipart/form-data'
+     },
+     onUploadProgress: (progressEvent) => {
+       // 可以根据需要更新进度条
+     }
+   });
+   const fullPath = response.data.output;
+   let player = document.querySelector('#video3')
+
+   // 截取 assets 目录及其后面的文件名部分
+   const startIndex = fullPath.indexOf('assets\\');
+   resultvideo.value = fullPath.substring(startIndex);
+   // 替换反斜杠为斜杠，并添加 ../ 表示上一级目录
+   resultvideo.value = resultvideo.value.replace(/\\/g, '/');
+   resultvideo.value = `/src/${resultvideo.value}`;
+   // player.src = resultvideo.value
+   // player.play()
+   console.log(resultvideo.value)
+ } catch (error) {
+   ElMessage.error(`视频处理失败: ${error.message}`);
+   isResult=false;
+ } finally {
+   loadingInstance.close();
+
+ }
+
 
 }
 </script>
@@ -181,11 +237,12 @@ function startPost(){
 
 
             </div>
-            <div >
-              <video id="video1" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
-<!--                <source src=" ../assets/video1_20240608_112911new.mp4">-->
-                <source :src="outputPath" type="video/mp4">
+            <div v-else>
+              <video
+                  id="video1" playsinline autoplay muted loop  controls style="width: 23vw;height: 35vh;margin-top: 10vh"
+                  :src="outputPath" type="video/mp4">
               </video>
+              <div style="margin-top: 10vh">{{outputPath}}</div>
             </div>
           </el-col>
 
@@ -218,29 +275,34 @@ function startPost(){
 
 
             </div>
-<!--            <div >-->
-<!--              <video playsinline="" autoplay="" muted="" loop="" controls-->
-<!--                     style="width: 23vw;height: 35vh;margin-top: 10vh;margin-left: 0.1vw">-->
-<!--                <source-->
-<!--                    src="../assets/video1_20240608_095150.mp4"-->
-<!--                    type="video/mp4">-->
-<!--              </video>-->
-<!--            </div>-->
+            <div v-else >
+              <video  id="video2" playsinline="" autoplay="" muted="" loop="" controls
+                     style="width: 23vw;height: 35vh;margin-top: 10vh;margin-left: 0.1vw">
+                <source
+                    :src="output2"
+                    type="video/mp4">
+              </video>
+            </div>
             <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: -3vw"
                        @click="startPost">开始检测
             </el-button>
+            <el-dialog :visible.sync="isProcessing" title="正在检测">
+              <el-progress :percentage="uploadPercentage" />
+            </el-dialog>
           </el-col>
           <el-col :span="1">
 
           </el-col>
           <el-col :span="11">
             <p class="goodText">输出视频</p>
-            <div v-if="isResult">
-              <video id="video1" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
-                <!--                <source src=" ../assets/video1_20240608_112911new.mp4">-->
-                <source :src="outputPath">
+<!--            <div v-if="isIdentify1&&isIdentify2">-->
+<!--              等待显示-->
+<!--              {{resultvideo}}-->
+<!--            </div>-->
+            <div  v-if="isResult">
+              <video id="video3" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
+                <source :src="resultvideo"   type="video/mp4">
               </video>
-
             </div>
 
           </el-col>
