@@ -12,6 +12,7 @@ let loadingInstance = null; // 存储加载实例
 
 let isIdentify1 = ref(false)//是否第一个框框已经识别
 let isIdentify2 = ref(false)//是否第二个框框已经识别
+let outputPath = ref('../assets/video1_20240608_112911new.mp4');
 let isResult =ref(false)
 const backUpload = "http://localhost:5000/process_videos";
 
@@ -39,13 +40,34 @@ const beforeUpload = (rawFile) => {
   return true;
 };
 // 自定义上传方法
-const handvideo1 = (file) => {
+const handvideo1 = async (file) => {
   isIdentify1.value = true;
   console.log(isIdentify1.value);
   video1File.value = file.raw;
-  console.log(video1File.value);
+  const formData = new FormData();
+  formData.append('video', file.raw);
 
+  try {
+    const response = await axios.post('http://localhost:5000/upload_video1', formData, {
+      headers: {
+        'Content-Type': 'multipart/form-data'
+      }
+    });
+    // 获取完整的 outputpath
+    const fullPath = response.data.outputpath;
 
+    // 截取 assets 目录及其后面的文件名部分
+    const startIndex = fullPath.indexOf('assets\\');
+     outputPath = fullPath.substring(startIndex);
+    // 替换反斜杠为斜杠，并添加 ../ 表示上一级目录
+    outputPath = outputPath.replace(/\\/g, '/');
+    outputPath = `../${outputPath}`;
+    console.log(outputPath)
+
+  } catch (error) {
+    ElMessage.error(`第一份视频上传失败: ${error.message}`);
+    isIdentify1.value = false;
+  }
 
 
 };
@@ -159,14 +181,12 @@ function startPost(){
 
 
             </div>
-<!--            <div v-else>-->
-<!--              <video playsinline="" autoplay="" muted="" loop="" controls-->
-<!--                     style="width: 23vw;height: 35vh;margin-top: 10vh">-->
-<!--                <source-->
-<!--                    src="../assets/D01.mp4"-->
-<!--                    type="video/mp4">-->
-<!--              </video>-->
-<!--            </div>-->
+            <div >
+              <video id="video1" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
+<!--                <source src=" ../assets/video1_20240608_112911new.mp4">-->
+                <source :src="outputPath" type="video/mp4">
+              </video>
+            </div>
           </el-col>
 
           <el-col :span="6">
@@ -198,14 +218,14 @@ function startPost(){
 
 
             </div>
-            <div v-else>
-              <video playsinline="" autoplay="" muted="" loop="" controls
-                     style="width: 23vw;height: 35vh;margin-top: 10vh;margin-left: 0.1vw">
-                <source
-                    src="../assets/D02.mp4"
-                    type="video/mp4">
-              </video>
-            </div>
+<!--            <div >-->
+<!--              <video playsinline="" autoplay="" muted="" loop="" controls-->
+<!--                     style="width: 23vw;height: 35vh;margin-top: 10vh;margin-left: 0.1vw">-->
+<!--                <source-->
+<!--                    src="../assets/video1_20240608_095150.mp4"-->
+<!--                    type="video/mp4">-->
+<!--              </video>-->
+<!--            </div>-->
             <el-button type="primary" style="display: flex;justify-items: center;align-items: center;margin-left: -3vw"
                        @click="startPost">开始检测
             </el-button>
@@ -216,22 +236,15 @@ function startPost(){
           <el-col :span="11">
             <p class="goodText">输出视频</p>
             <div v-if="isResult">
-              <video playsinline="" autoplay="" muted="" loop="" controls style="width: 45vw;height: 55vh">
-                <source
-                    src="../assets/result_20240606_110302.mp4"
-                    type="video/mp4">
+              <video id="video1" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
+                <!--                <source src=" ../assets/video1_20240608_112911new.mp4">-->
+                <source :src="outputPath">
               </video>
+
             </div>
 
           </el-col>
-          <!--          <el-col :span="0.4" style="height: 100%  ">-->
-          <!--            <el-divider direction="vertical" style="height: 70vh;background-color: #0e0e0e"></el-divider>-->
-          <!--          </el-col>-->
-          <!--          <el-col :span="8">-->
-          <!--            <div style="display: flex;flex-direction: row;background-color: #a8abb2;width: 40vw">-->
-          <!--              <VideoPlayer newid="three"></VideoPlayer>-->
-          <!--            </div>-->
-          <!--          </el-col>-->
+
 
 
         </el-row>
