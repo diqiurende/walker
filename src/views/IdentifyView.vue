@@ -14,7 +14,7 @@ let isIdentify1 = ref(false)//是否第一个框框已经识别
 let isIdentify2 = ref(false)//是否第二个框框已经识别
 let outputPath = ref('/src/assets/video1_20240608_115441new.mp4');
 let output2=ref('src/assets/video2_20240608_195430new.mp4')
-let resultvideo=ref('/src/assets/result_20240608_221453new.mp4')
+let resultvideo=ref('src/assets/result_20240615_171121new.mp4')
 let isResult =ref(false)
 const isProcessing = ref(false);
 const backUpload = "http://localhost:5000/process_videos";
@@ -145,6 +145,7 @@ async function startPost() {
    // 替换反斜杠为斜杠，并添加 ../ 表示上一级目录
    resultvideo.value = resultvideo.value.replace(/\\/g, '/');
    resultvideo.value = `/src/${resultvideo.value}`;
+
    // player.src = resultvideo.value
    // player.play()
    console.log(resultvideo.value)
@@ -242,7 +243,7 @@ async function startPost() {
                   id="video1" playsinline autoplay muted loop  controls style="width: 23vw;height: 35vh;margin-top: 10vh"
                   :src="outputPath" type="video/mp4">
               </video>
-              <div style="margin-top: 10vh">{{outputPath}}</div>
+
             </div>
           </el-col>
 
@@ -295,12 +296,9 @@ async function startPost() {
           </el-col>
           <el-col :span="11">
             <p class="goodText">输出视频</p>
-<!--            <div v-if="isIdentify1&&isIdentify2">-->
-<!--              等待显示-->
-<!--              {{resultvideo}}-->
-<!--            </div>-->
-            <div  v-if="isResult">
-              <video id="video3" playsinline autoplay muted loop controls style="width: 23vw;height: 35vh;margin-top: 10vh">
+
+            <div v-if="isResult"  >
+              <video id="video3" playsinline autoplay muted loop controls style="margin-left:7vw;width: 30vw;height: 35vh;margin-top: 10vh">
                 <source :src="resultvideo"   type="video/mp4">
               </video>
             </div>
