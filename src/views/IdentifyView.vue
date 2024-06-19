@@ -302,6 +302,9 @@ async function startPost() {
                 <source :src="resultvideo"   type="video/mp4">
               </video>
             </div>
+            <div v-else>
+              {{resultvideo}}
+            </div>
 
           </el-col>
 
